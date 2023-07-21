@@ -18,11 +18,35 @@
 
 <body>
     <a-scene gps-camera="gpsEnabled: true">
-        <a-entity gps-projected-entity-place lat="23.133266" lon="113.283274" elevation="0">
+        <a-entity id="target" gps-projected-entity-place lat="23.133266" lon="113.283274" elevation="0">
             <a-entity geometry="primitive: sphere; radius: 0.5" material="color: red" position="0 0 -3">
             </a-entity>
         </a-entity>
     </a-scene>
+
+
+        <script>
+        AFRAME.registerComponent("scale-on-distance", {
+            schema: {
+                target: { type: "selector" }
+            },
+            init: function () {
+                this.scale = this.el.getAttribute("scale");
+                this.camera = document.querySelector("[gps-camera]");
+            },
+            tick: function () {
+                var distance = this.el.object3D.position.distanceTo(this.camera.object3D.position);
+                this.el.setAttribute("scale", {
+                    x: this.scale.x * distance,
+                    y: this.scale.y * distance,
+                    z: this.scale.z * distance
+                });
+            }
+        });
+
+        var target = document.querySelector("#target");
+        target.setAttribute("scale-on-distance", { target: target });
+    </script>
 
 </body>
 
