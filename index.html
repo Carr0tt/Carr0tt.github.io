@@ -19,9 +19,13 @@
 <body>
     <a-scene id="qwe">
         <a-entity id="target" elevation="0"> </a-entity>
+        <a-camera id="op">
+            <a-text id="txt" , value="Hello, world!" position="-0.5 -0 -1  " color="black"></a-text>
+
+        </a-camera>
     </a-scene>
 
-    
+
 
 
     <script>
@@ -38,12 +42,10 @@
         })
         document.querySelector('#target').appendChild(newEntity);
 
-        var newEntity2 = document.createElement('a-camera');
-        newEntity2.setAttribute('id','op');
+        let newEntity2 = document.querySelector('#op');
         newEntity2.setAttribute('arjs-device-orientation-controls', 'smoothingFactor: 0.8');
         //    newEntity2.setAttribute('gps-camera', 'simulateLatitude: ' + cameraLatitude + '; simulateLongitude: ' + cameraLongitude);
         newEntity.setAttribute('cursor', 'rayOrigin: mouse');
-        document.querySelector('#qwe').appendChild(newEntity2);
 
 
     </script>
@@ -63,14 +65,16 @@
                 console.log("Entity position: ", this.el.object3D.position);
                 console.log("Camera position: ", this.camera.object3D.position);
                 console.log("Distance: ", distance);
+                var newText = document.querySelector('#txt');
+                newText.setAttribute('value', 'D: ' + distance);
 
                 this.el.setAttribute("scale", {
                     // x: this.scale.x * distance,
                     // y: this.scale.y * distance,
                     // z: this.scale.z * distance
-                    x: 0.05 * distance,
-                    y: 0.05 * distance,
-                    z: 0.05 * distance
+                    x: 0.1 * distance,
+                    y: 0.1 * distance,
+                    z: 0.1 * distance
                 });
             }
         });
@@ -78,6 +82,8 @@
         var target = document.querySelector("#abc");
         target.setAttribute("scale-on-distance", { target: target });
     </script>
+
+
 </body>
 
 </html>
