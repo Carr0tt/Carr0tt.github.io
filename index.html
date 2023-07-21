@@ -17,26 +17,57 @@
 </head>
 
 <body>
-    <a-scene gps-camera="gpsEnabled: true" renderer="antialias: true">
-        <a-entity id="target" gps-projected-entity-place lat="23.133266" lon="113.283274" elevation="0">
-            <a-entity geometry="primitive: sphere; radius: 0.5" material="color: red" position="0 0 0">
-            </a-entity>
-        </a-entity>
+    <a-scene id="qwe">
+        <a-entity id="target" elevation="0"> </a-entity>
     </a-scene>
 
+    
 
-        <script>
+
+    <script>
+        let newEntity = document.createElement('a-cylinder')
+        newEntity.setAttribute('id', 'abc');
+        newEntity.setAttribute('radius', '0.4');
+        newEntity.setAttribute('height', '5');
+        newEntity.setAttribute('color', 'red');
+        newEntity.setAttribute('rotation', '0 30 90');
+        newEntity.setAttribute('position', { x: 0, y: -13, z: 0 });
+        newEntity.setAttribute('gps-projected-entity-place', {
+            latitude: 23.133266,
+            longitude: 113.283274
+        })
+        document.querySelector('#target').appendChild(newEntity);
+
+        var newEntity2 = document.createElement('a-camera');
+        newEntity2.setAttribute('id','op');
+        newEntity2.setAttribute('arjs-device-orientation-controls', 'smoothingFactor: 0.8');
+        //    newEntity2.setAttribute('gps-camera', 'simulateLatitude: ' + cameraLatitude + '; simulateLongitude: ' + cameraLongitude);
+        newEntity.setAttribute('cursor', 'rayOrigin: mouse');
+        document.querySelector('#qwe').appendChild(newEntity2);
+
+
+    </script>
+
+    <script>
         AFRAME.registerComponent("scale-on-distance", {
             schema: {
                 target: { type: "selector" }
             },
             init: function () {
                 this.scale = this.el.getAttribute("scale");
-                this.camera = document.querySelector("[gps-camera]");
+                this.camera = document.querySelector("#op");
             },
             tick: function () {
                 var distance = this.el.object3D.position.distanceTo(this.camera.object3D.position);
+
+                console.log("Entity position: ", this.el.object3D.position);
+                console.log("Camera position: ", this.camera.object3D.position);
+                console.log("Distance: ", distance);
+
                 this.el.setAttribute("scale", {
+                    // x: this.scale.x * distance,
+                    // y: this.scale.y * distance,
+                    // z: this.scale.z * distance
                     x: this.scale.x * distance,
                     y: this.scale.y * distance,
                     z: this.scale.z * distance
@@ -44,10 +75,9 @@
             }
         });
 
-        var target = document.querySelector("#target");
+        var target = document.querySelector("#abc");
         target.setAttribute("scale-on-distance", { target: target });
     </script>
-
 </body>
 
 </html>
