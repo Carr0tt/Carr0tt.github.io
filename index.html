@@ -1,46 +1,51 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v4.1.3/dist/aframe-extras.min.js"></script>
-  </head>
-  <body>
-    <a-scene>
-      <a-assets>
-        <img id="marker" src="https://raw.githubusercontent.com/jeromeetienne/AR.js/master/three.js/examples/marker-training/examples/generator.html"/>
-      </a-assets>
-      
-      <a-camera gps-camera rotation-reader>
-        <a-entity id="marker" geometry="primitive: plane; width: 1; height: 1" material="src: #marker" position="0 0 -5"></a-entity>
-      </a-camera>
-      
-      <a-entity ar-marker></a-entity>
-      
-      <a-entity environment></a-entity>
+
+<head>
+    <title>AR</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <script src="js/aframe-1.1.0/dist/aframe-master.js"></script>
+    <script src='js/AR.js-master/three.js/build/ar-threex-location-only.js'></script>
+    <script src='js/AR.js-master/aframe/build/aframe-ar.js'></script>
+    <script src="js/echarts/dist/echarts.min.js"></script>
+    <script src="js/src/aframe-event-set-component.js"></script>
+    <script src="js/src/extra-stats.umd.min.js"></script>
+    <script src="js/src/aframe-physics-system.js"></script>
+
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
+    <script
+        src="https://webapi.amap.com/maps?v=2.0&key=e26a0aa90a4b4adfc02d2b93b151689b&plugin=AMap.Autocomplete"></script>
+    <script src="https://a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
+
+    <script src="js/InitPipeData.js"></script>
+    <script src="js/Data.js"></script>
+    <script src="js/Chart.js"></script>
+    <link href="css/AR-button1.css" type="text/css" rel="stylesheet" />
+    <link href="css/AR-button2.css" type="text/css" rel="stylesheet" />
+    <link href="css/Exit-button.css" type="text/css" rel="stylesheet" />
+    <link href="css/Window1.css" type="text/css" rel="stylesheet" />
+    <link href="css/Window2.css" type="text/css" rel="stylesheet" />
+    <link href="css/NewWindow.css" type="text/css" rel="stylesheet" />
+    <link href="css/Choose.css" type="text/css" rel="stylesheet" />
+    <link href="css/GpsWindow.css" type="text/css" rel="stylesheet" />
+</head>
+
+<body>
+    <a-scene gps-camera="gpsEnabled: true">
+        <a-entity gps-projected-entity-place lat="23.133266" lon="113.283274" elevation="0">
+            <a-entity geometry="primitive: sphere; radius: 0.5" material="color: red" position="0 0 -3">
+            </a-entity>
+        </a-entity>
     </a-scene>
 
-    <script>
-      AFRAME.registerComponent('ar-marker', {
-        init: function() {
-          var marker = document.querySelector('#marker');
-          var camera = document.querySelector('[gps-camera]');
-          var rotationReader = document.querySelector('[rotation-reader]');
+    <script src="js/NewLocation.js"></script>
+    <script src="js/InitPipeModel.js"></script>
+    <script src="js/NewPipe.js"></script>
+    <script src="js/button.js"></script>
+    <script src="js/Choose.js"></script>
+</body>
 
-          // 固定 AR 物体
-          marker.setAttribute('gps-entity-place', {
-            latitude: camera.getAttribute('gps-camera').latitude,
-            longitude: camera.getAttribute('gps-camera').longitude
-          });
-
-          //绑定 AR 物体到相机前方一定距离的位置
-          rotationReader.addEventListener('rotationChanged', function() {
-            var position = new THREE.Vector3(0, 0, -5);
-            position.applyQuaternion(camera.object3D.getWorldQuaternion());
-            position.add(camera.object3D.position);
-            marker.setAttribute('position', position);
-          });
-        }
-      });
-    </script>
-  </body>
+</html>
 </html>
