@@ -2,50 +2,69 @@
 <html>
 
 <head>
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://cdn.rawgit.com/donmccurdy/aframe-extras/v4.1.3/dist/aframe-extras.min.js"></script>
+    <title>AR2</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+
+    <script src="../js/aframe-1.4.0/dist/aframe-master.js"></script>
+    <script src="../js/aframe-1.4.0/dist/aframe-master.min.js"></script>
+    <script src='../js/AR.js-master/three.js/build/ar-threex-location-only.js'></script>
+    <script src='../js/AR.js-master/aframe/build/aframe-ar.js'></script>
+    <script src="../js/src/aframe-event-set-component.js"></script>
+    <script src="../js/src/extra-stats.umd.min.js"></script>
+    <script src="../js/src/aframe-physics-system.js"></script>
+
+
 </head>
 
 <body>
-    <a-scene>
-        <a-assets>
-            <img id="marker"
-                src="https://raw.githubusercontent.com/jeromeetienne/AR.js/master/three.js/examples/marker-training/examples/generator.html" />
-        </a-assets>
+    <span>用属性固定住一个东西的gps信息</span>
+    <button onclick="ToIndex()">返回导航页</button>
 
-        <a-camera gps-camera rotation-reader>
-            <a-entity id="marker" geometry="primitive: plane; width: 1; height: 1" material="src: #marker"
-                position="0 0 -5"></a-entity>
+    <a-scene>
+        <a-camera id="qaq">
+            <a-text id="txt" , value="Hello, world!" position="-0.5 -0 -1  " color="black" scale="0.6 0.6 0.6"></a-text>
+            <a-box id="box1" material="color: yellow" position="0 2 0" />
+
         </a-camera>
 
-        <a-entity ar-marker></a-entity>
-
-        <a-entity environment></a-entity>
     </a-scene>
 
+    <script>function ToIndex() { window.location.href = "../index.html"; }</script>
+
     <script>
-        AFRAME.registerComponent('ar-marker', {
-            init: function () {
-                var marker = document.querySelector('#marker');
-                var camera = document.querySelector('[gps-camera]');
-                var rotationReader = document.querySelector('[rotation-reader]');
-
-                // 固定 AR 物体
-                marker.setAttribute('gps-entity-place', {
-                    latitude: camera.getAttribute('gps-camera').latitude,
-                    longitude: camera.getAttribute('gps-camera').longitude
-                });
-
-                //绑定 AR 物体到相机前方一定距离的位置
-                rotationReader.addEventListener('rotationChanged', function () {
-                    var position = new THREE.Vector3(0, 0, -5);
-                    position.applyQuaternion(camera.object3D.getWorldQuaternion());
-                    position.add(camera.object3D.position);
-                    marker.setAttribute('position', position);
-                });
-            }
-        });
+        let newEntity = document.querySelector('#qaq');
+        newEntity.setAttribute('arjs-device-orientation-controls', 'smoothingFactor: 0.8');
+        newEntity.setAttribute('gps-camera', 'simulateLatitude: ' + cameraLatitude + '; simulateLongitude: ' + cameraLongitude);
+        newEntity.setAttribute('cursor', 'rayOrigin: mouse');
     </script>
+
+    <script>
+
+        function successCallback(location) {
+            var lon = location.coords.longitude;
+            var lat = location.coords.latitude;
+            var newEntity1 = document.querySelector('#box1');
+            box1.setAttribute('gps-new-entity-place', { latitude: lat, longitude: lon });
+            var txt = document.querySelector('#txt');
+            txt.setAttribute('scale', '0.3 0.3 0.3');
+            txt.setAttribute('value', 'success!');
+
+        };
+
+        function errorCallback(error) {
+            var txt = document.querySelector('#txt');
+            txt.setAttribute('value', 'qwert');
+        };
+
+        if (navigator.geolocation) { navigator.geolocation.getCurrentPosition(successCallback, errorCallback); };
+
+
+    </script>
+
 </body>
+
+
 
 </html>
