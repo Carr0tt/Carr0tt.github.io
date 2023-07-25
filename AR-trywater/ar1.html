@@ -39,12 +39,18 @@
    </script>
 
    <script>
-    var newText = document.querySelector('#txt');
+        var txt = document.querySelector("txt");
+        function showPosition(position) {
+            txt.setAttribute('value', 'adwdfcaef')
+        }
 
-    navigator.geolocation.watchPosition(function (position) {
-    newText.setAttribute('value', 'D: ');
-    console.log("safafaaf")
-        }, { enableHighAccuracy: true });
+        function showError(error) {
+        }
+
+        if (navigator.geolocation) {
+            navigator.geolocation.watchPosition(showPosition, showError);
+        } else {
+        }
    </script>
 </body>
 
