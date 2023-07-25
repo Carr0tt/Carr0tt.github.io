@@ -23,10 +23,9 @@
     <button onclick="ToIndex()">返回导航页</button>
 
     <a-scene >
-        <a-camera id="qaq" look-controls-enabled="false">
+        <a-camera id="qaq" >
             <a-text id="txt" , value="Hello, world!" position="-0.5 -0 -1  " color="black" scale="0.6 0.6 0.6"></a-text>
-            <a-box id="box1" material="color: yellow" position="0 16 0" scale="0.61 0.61 0.61"> </a-box>
-            <a-box gps-entity-place position="0 8 0" scale="0.61 0.61 0.61"></a-box>
+            <a-box gps-entity-place position="0 3 0" scale="0.61 0.61 0.61"></a-box>
 
 
         </a-camera>
@@ -38,6 +37,7 @@
     <script>
         let newEntity = document.querySelector('#qaq');
         newEntity.setAttribute('arjs-device-orientation-controls', 'smoothingFactor: 0.8');
+        newEntity.setAttribute('look-controls-enabled','false');
     </script>
 
     <script>
@@ -51,14 +51,6 @@
             var txt1 = document.querySelector('#txt');
             txt1.setAttribute('scale', '0.3 0.3 0.3');
             txt1.setAttribute('value', 'gaibianqian');
-
-
-            var box1 = document.querySelector('#box1');
-            box1.setAttribute('gps-projected-entity-place', { latitude: lat, longitude: lon });
-            //const dis = box1.getAttribute('gps-new-entity-place').distance;
-
-            txt1.setAttribute('value', 'iiuiuiu');
-
 
         };
 
