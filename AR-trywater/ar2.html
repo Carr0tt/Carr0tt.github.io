@@ -22,23 +22,16 @@
     <span>用属性固定住一个东西的gps信息</span>
     <button onclick="ToIndex()">返回导航页</button>
 
-    <a-scene>
-        <a-camera id="qaq">
-            <a-text id="txt" , value="Hello, world!" position="-0.5 -0 -1  " color="black" scale="0.6 0.6 0.6"></a-text>
-            <a-box id="box1" material="color: yellow" position="0 20 0" />
+    <a-scene >
+            <a-text id="txt" , value="Hello, world!" position="-0.5 -0 -1  " color="black" scale="1 1 1"></a-text>
 
-        </a-camera>
+            <a-box id="box1" gps-entity-place position="0 20 0" scale="0.61 0.61 0.61"></a-box>
 
     </a-scene>
 
     <script>function ToIndex() { window.location.href = "../index.html"; }</script>
 
-    <script>
-        let newEntity = document.querySelector('#qaq');
-        newEntity.setAttribute('arjs-device-orientation-controls', 'smoothingFactor: 0.8');
-        //newEntity.setAttribute('gps-camera', 'simulateLatitude: ' + cameraLatitude + '; simulateLongitude: ' + cameraLongitude);
-        newEntity.setAttribute('cursor', 'rayOrigin: mouse');
-    </script>
+
 
     <script>
 
@@ -46,25 +39,24 @@
             var lon = location.coords.longitude;
             var lat = location.coords.latitude;
 
-            newEntity.setAttribute('gps-camera', 'simulateLatitude: ' + lat + '; simulateLongitude: ' + lon);
 
             var txt1 = document.querySelector('#txt');
-            txt1.setAttribute('scale', '0.3 0.3 0.3');
+            txt1.setAttribute('scale', '1 1 1');
             txt1.setAttribute('value', 'gaibianqian');
 
 
             var box1 = document.querySelector('#box1');
-            box1.setAttribute('gps-entity-place', { latitude: lat, longitude: lon });
-            const gpsCoords = box1.getAttribute('gps-entity-place');
+           // box1.setAttribute('gps-projected-entity-place', { latitude: lat, longitude: lon });
+            //const dis = box1.getAttribute('gps-new-entity-place').distance;
 
-            txt1.setAttribute('value', gpsCoords.latitude);
+            txt1.setAttribute('value', 'iiuiujvhbjbhbiu');
 
 
         };
 
         function errorCallback(error) {
             var txt = document.querySelector('#txt');
-            txt.setAttribute('value', 'qwert');
+            txt.setAttribute('value', 'q kjjnkjnkjnkwert');
         };
 
         if (navigator.geolocation) { navigator.geolocation.getCurrentPosition(successCallback, errorCallback); };
