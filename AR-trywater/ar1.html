@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AR1</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+   
+    <script src="../js/aframe-1.4.0/dist/aframe-master.js"></script>
+    <script src="../js/aframe-1.4.0/dist/aframe-master.min.js"></script>
+    <script src='../js/AR.js-master/three.js/build/ar-threex-location-only.js'></script>
+    <script src='../js/AR.js-master/aframe/build/aframe-ar.js'></script>
+    <script src="../js/src/aframe-event-set-component.js"></script>
+    <script src="../js/src/extra-stats.umd.min.js"></script>
+    <script src="../js/src/aframe-physics-system.js"></script>
+
+
+</head>
+
+<body>
+  <span>只有camera，要求动的时候可以实时输出当前gps信息</span>
+   <button onclick="ToIndex()">返回导航页</button>
+
+   <a-scene>
+    <a-camera id="qaq" >
+      <a-text id="txt" , value="Hello, world!" position="-0.5 -0 -1  " color="black" scale="0.6 0.6 0.6"></a-text>
+    </a-camera>
+    
+   </a-scene>
+
+   <script>function ToIndex(){window.location.href = "../index.html";}</script>
+
+   <script>
+    let newEntity = document.querySelector('#qaq');
+    newEntity.setAttribute('arjs-device-orientation-controls', 'smoothingFactor: 0.8');
+    newEntity.setAttribute('gps-camera', 'simulateLatitude: ' + cameraLatitude + '; simulateLongitude: ' + cameraLongitude);
+    newEntity.setAttribute('cursor', 'rayOrigin: mouse');
+   </script>
+
+   <script>
+    var newText = document.querySelector('#txt');
+
+    document.addEventListener('gps-entity-place-changed', function () {
+            newText.setAttribute('value', 'D: ');
+            console.log('Entity position or rotation changed!');
+        });
+   </script>
+</body>
+
+
+
+</html>
+
+

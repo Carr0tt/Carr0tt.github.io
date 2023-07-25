@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AR2</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <script src="js/aframe-1.4.0/dist/aframe-master.js"></script>
+    <script src="js/aframe-1.4.0/dist/aframe-master.min.js"></script>
+    <script src='js/AR.js-master/three.js/build/ar-threex-location-only.js'></script>
+    <script src='js/AR.js-master/aframe/build/aframe-ar.js'></script>
+    <script src="js/echarts/dist/echarts.min.js"></script>
+    <script src="js/src/aframe-event-set-component.js"></script>
+    <script src="js/src/extra-stats.umd.min.js"></script>
+    <script src="js/src/aframe-physics-system.js"></script>
+
+
+</head>
+
+<body>
+    <a-scene>
+        <!-- 相机组件 -->
+        <a-entity id="camera" camera look-controls>
+
+            <a-text id="txt" , value="Hello, world!" position="-0.5 -0 -1  " color="black" scale="0.2 0.2 0.2"></a-text>
+
+        </a-entity>
+
+        <!-- 物体组件 -->
+        <a-box id="box" position="0 0.5 -5" color="red"></a-box>
+    </a-scene>
+
+    <script>
+        // 获取相机和物体元素
+        var camera = document.querySelector("#camera");
+        var box = document.querySelector("#box");
+
+        // 设置定时器，每隔一段时间更新一次物体大小
+        setInterval(function () {
+            // 获取相机和物体在 GPS 坐标系下的位置
+            var cameraPosition = getGPSPosition(camera.object3D.position);
+            var boxPosition = getGPSPosition(box.object3D.position);
+
+            // 计算相机和物体在 GPS 坐标系下的距离
+            var distance = getDistance(cameraPosition, boxPosition);
+
+            // juli~
+            var newText = document.querySelector('#txt');
+            newText.setAttribute('value', 'D: ' + distance);
+
+            // 根据距离调整物体大小
+            var scaleFactor = Math.max(Math.min(10 / distance, 1), 0.1);
+            box.setAttribute("scale", `${scaleFactor} ${scaleFactor} ${scaleFactor}`);
+        }, 1000); // 每隔 1 秒钟更新一次物体大小
+
+        // 将 A-Frame 世界坐标系下的位置转换成 GPS 坐标系下的位置
+        function getGPSPosition(position) {
+            // 获取 A-Frame 世界坐标系的原点在 GPS 坐标系下的位置
+            var origin = new THREE.Vector3();
+            var gpsOrigin = new THREE.Vector3(0, 0, 0);
+            var gpsCoordinates = AFRAME.utils.geo.coordinatesFromPosition(gpsOrigin);
+
+            // 获取相机或物体在 A-Frame 世界坐标系中的位置
+            var p = position.clone();
+
+            // 将 A-Frame 坐标系中的位置转换成 GPS 坐标系中的位置
+            p.sub(origin);
+            p.applyAxisAngle(new THREE.Vector3(1, 0, 0), -Math.PI / 2);
+            p.applyAxisAngle(new THREE.Vector3(0, 0, 1), -Math.PI / 2);
+            p.divideScalar(10);  // 将 A-Frame 坐标系中的单位长度转换成 GPS 坐标系中的单位长度
+            p.add(gpsOrigin);
+            var gpsPosition = AFRAME.utils.geo.positionFromCoordinates(gpsCoordinates, p);
+
+            return gpsPosition;
+        }
+
+        // 计算两个 GPS 坐标系下的位置之间的距离
+        function getDistance(position1, position2) {
+            var earthRadius = 6378137;  // 地球半径，单位：米
+            var lat1 = position1.latitude * Math.PI / 180;
+            var lat2 = position2.latitude * Math.PI / 180;
+            var lon1 = position1.longitude * Math.PI / 180;
+            var lon2 = position2.longitude * Math.PI / 180;
+            var dLat = lat2 - lat1;
+            var dLon = lon2 - lon1;
+            var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(lat1) * Math.cos(lat2) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+            var distance = earthRadius * c;
+            return distance;
+        }
+    </script>
+
+
+</body>
+
+</html>
