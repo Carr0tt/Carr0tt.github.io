@@ -23,9 +23,6 @@
     <button onclick="ToIndex()">返回导航页</button>
 
     <a-scene  gps-camera="look-controls-enabled: false">
-        <a-camera id="qaq" >
-            <a-text id="txt" , value="Hello, world!" position="-0.5 -0 -1  " color="black" scale="0.6 0.6 0.6"></a-text>
-        </a-camera>
 
       <a-box gps-entity-place position="0 3 0" scale="0.61 0.61 0.61"></a-box>
 
@@ -34,11 +31,6 @@
 
     <script>function ToIndex() { window.location.href = "../index.html"; }</script>
 
-    <script>
-        let newEntity = document.querySelector('#qaq');
-        newEntity.setAttribute('arjs-device-orientation-controls', 'smoothingFactor: 0.8');
-        newEntity.setAttribute('look-controls-enabled','false');
-    </script>
 
     <script>
 
@@ -46,17 +38,9 @@
             var lon = location.coords.longitude;
             var lat = location.coords.latitude;
 
-            newEntity.setAttribute('gps-camera', 'simulateLatitude: ' + lat + '; simulateLongitude: ' + lon);
-
-            var txt1 = document.querySelector('#txt');
-            txt1.setAttribute('scale', '0.3 0.3 0.3');
-            txt1.setAttribute('value', 'gaibianqian');
-
         };
 
         function errorCallback(error) {
-            var txt = document.querySelector('#txt');
-            txt.setAttribute('value', 'qwert');
         };
 
         if (navigator.geolocation) { navigator.geolocation.getCurrentPosition(successCallback, errorCallback); };
