@@ -41,7 +41,8 @@
    <script>
         var txt = document.querySelector("#txt");
         function showPosition(position) {
-            txt.setAttribute('value', "adwasfasdw");
+            txt.setAttribute('scale','0.1 0.1 0.1')
+            txt.setAttribute('value', "Lat:"+ position.coords.latitude);
         }
 
         function showError(error) {
