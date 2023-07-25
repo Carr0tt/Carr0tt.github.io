@@ -19,35 +19,16 @@
 </head>
 
 <body>
-    <span>用属性固定住一个东西的gps信息</span>
-    <button onclick="ToIndex()">返回导航页</button>
+
 
     <a-scene  gps-camera="look-controls-enabled: false">
 
-      <a-box gps-entity-place position="0 3 0" scale="0.61 0.61 0.61" color='red'></a-box>
-
+      <a-box gps-entity-place position="0 0 0" scale="0.61 0.61 0.61" color='red'></a-box>
 
     </a-scene>
 
-    <script>function ToIndex() { window.location.href = "../index.html"; }</script>
 
-
-    <script>
-
-        function successCallback(location) {
-            var lon = location.coords.longitude;
-            var lat = location.coords.latitude;
-
-        };
-
-        function errorCallback(error) {
-        };
-
-        if (navigator.geolocation) { navigator.geolocation.getCurrentPosition(successCallback, errorCallback); };
-
-
-    </script>
-
+  
 </body>
 
 
