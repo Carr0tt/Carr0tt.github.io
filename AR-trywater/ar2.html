@@ -25,7 +25,7 @@
     <a-scene>
         <a-camera id="qaq">
             <a-text id="txt" , value="Hello, world!" position="-0.5 -0 -1  " color="black" scale="0.6 0.6 0.6"></a-text>
-            <a-box id="box1" material="color: yellow" position="0 2 0" />
+            <a-box id="box1" material="color: yellow" position="0 20 0" />
 
         </a-camera>
 
@@ -36,7 +36,7 @@
     <script>
         let newEntity = document.querySelector('#qaq');
         newEntity.setAttribute('arjs-device-orientation-controls', 'smoothingFactor: 0.8');
-        newEntity.setAttribute('gps-camera', 'simulateLatitude: ' + cameraLatitude + '; simulateLongitude: ' + cameraLongitude);
+        //newEntity.setAttribute('gps-camera', 'simulateLatitude: ' + cameraLatitude + '; simulateLongitude: ' + cameraLongitude);
         newEntity.setAttribute('cursor', 'rayOrigin: mouse');
     </script>
 
@@ -45,11 +45,20 @@
         function successCallback(location) {
             var lon = location.coords.longitude;
             var lat = location.coords.latitude;
-            var newEntity1 = document.querySelector('#box1');
-            box1.setAttribute('gps-new-entity-place', { latitude: lat, longitude: lon });
-            var txt = document.querySelector('#txt');
-            txt.setAttribute('scale', '0.3 0.3 0.3');
-            txt.setAttribute('value', 'success!');
+
+            newEntity.setAttribute('gps-camera', 'simulateLatitude: ' + lat + '; simulateLongitude: ' + lon);
+
+            var txt1 = document.querySelector('#txt');
+            txt1.setAttribute('scale', '0.3 0.3 0.3');
+            txt1.setAttribute('value', 'gaibianqian');
+
+
+            var box1 = document.querySelector('#box1');
+            box1.setAttribute('gps-entity-place', { latitude: lat, longitude: lon });
+            const gpsCoords = box1.getAttribute('gps-entity-place');
+
+            txt1.setAttribute('value', gpsCoords.latitude);
+
 
         };
 
