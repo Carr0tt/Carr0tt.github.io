@@ -41,10 +41,10 @@
    <script>
     var newText = document.querySelector('#txt');
 
-    document.addEventListener('gps-entity-place-changed', function () {
-            newText.setAttribute('value', 'D: ');
-            console.log('Entity position or rotation changed!');
-        });
+    navigator.geolocation.watchPosition(function (position) {
+    newText.setAttribute('value', 'D: ');
+    console.log("safafaaf")
+        }, { enableHighAccuracy: true });
    </script>
 </body>
 
