@@ -47,9 +47,9 @@
 
             var box1 = document.querySelector('#box1');
             box1.setAttribute('gps-projected-entity-place', { latitude: lat, longitude: lon });
-            //const dis = box1.getAttribute('gps-new-entity-place').distance;
+            const dis = box1.getAttribute('gps-new-entity-place').latitude;
 
-            txt1.setAttribute('value', lat);
+            txt1.setAttribute('value', 'dy: '+lat+' box: '+dis);
 
 
         };
@@ -59,7 +59,7 @@
             //txt.setAttribute('value', 'q kjjnkjnkjnkwert');
         };
 
-        if (navigator.geolocation) { navigator.geolocation.getCurrentPosition(successCallback, errorCallback); };
+         navigator.geolocation.watchPosition(successCallback, errorCallback);
 
 
     </script>
