@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AR3</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+
+    <script src="../js/aframe-1.4.0/dist/aframe-master.js"></script>
+    <script src="../js/aframe-1.4.0/dist/aframe-master.min.js"></script>
+    <script src='../js/AR.js-master/three.js/build/ar-threex-location-only.js'></script>
+    <script src='../js/AR.js-master/aframe/build/aframe-ar.js'></script>
+    <script src="../js/src/aframe-event-set-component.js"></script>
+    <script src="../js/src/extra-stats.umd.min.js"></script>
+    <script src="../js/src/aframe-physics-system.js"></script>
+
+
+</head>
+
+<body>
+    <span>实时输出当前位置与物体间的距离（gps坐标系下）</span>
+    <button onclick="ToIndex()">返回导航页</button>
+
+    <a-scene gps-camera="look-controls-enabled: false">
+        <a-box id='box1' gps-projected-entity-place position="0 0 0" scale="0.61 0.61 0.61" color='red'></a-box>
+
+        <a-text id="txt" , value="Hello, world!" position="-0.5 -0 -1  " color="black" scale="1 1 1"></a-text>
+        <a-text id="txt2" , value="Hello, world!" position="-2 -2 -2  " color="black" scale="2 2 2"></a-text>
+
+
+    </a-scene>
+
+    <script>function ToIndex() { window.location.href = "../index.html"; }</script>
+
+
+
+    <script>
+
+        function successCallback(location) {
+            var lon = location.coords.longitude;
+            var lat = location.coords.latitude;
+
+
+            var txt1 = document.querySelector('#txt');
+            txt1.setAttribute('scale', '1 1 1');
+            var txt2 = document.querySelector('#txt2');
+
+
+            var box1 = document.querySelector('#box1');
+            box1.setAttribute('gps-projected-entity-place', { latitude: lat, longitude: lon });
+            var camdis = box1.getAttribute('gps-projected-entity-place');
+            var DistanceFromCam2Obj = getDistance(camdis,location.coords)
+            
+            txt2.setAttribute('value','cam: '+lat+' box: '+camdis.latitude);
+            txt1.setAttribute('value', 'dis: '+DistanceFromCam2Obj);
+
+ 
+        };
+
+        function errorCallback(error) {
+            //var txt = document.querySelector('#txt');
+            //txt.setAttribute('value', 'q kjjnkjnkjnkwert');
+        };
+
+        navigator.geolocation.watchPosition(successCallback, errorCallback);
+
+
+    </script>
+
+
+
+<script>
+    function getDistance(positionCam, positionObj) {
+        var earthRadius = 6378137;  // 地球半径，单位：米
+        var lat1 = positionCam.latitude * Math.PI / 180;
+        var lat2 = positionObj.latitude * Math.PI / 180;
+        var lon1 = positionCam.longitude * Math.PI / 180;
+        var lon2 = positionObj.longitude * Math.PI / 180;
+        var dLat = lat2 - lat1;
+        var dLon = lon2 - lon1;
+        var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(lat1) * Math.cos(lat2) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        var distance = earthRadius * c * 1000;
+        return distance;
+    }
+</script>
+
+</body>
+
+
+
+</html>
+
