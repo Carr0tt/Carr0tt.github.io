@@ -34,6 +34,12 @@
 
 
     <script>
+        function successfully(one_time_location)
+            {
+        let box1 = document.querySelector('#box1');
+        box1.setAttribute('gps-projected-entity-place', { latitude: one_time_location.coords.latitude, longitude: one_time_location.coords.longitude });
+            }
+
 
         function successCallback(location) {
             var lon = location.coords.longitude;
@@ -45,8 +51,6 @@
             txt1.setAttribute('value', lon);
 
 
-            var box1 = document.querySelector('#box1');
-            box1.setAttribute('gps-projected-entity-place', { latitude: lat, longitude: lon });
             const dis = box1.getAttribute('gps-projected-entity-place').latitude;
 
             txt1.setAttribute('value', 'dy: '+lat+' box: '+dis);
@@ -58,6 +62,9 @@
             //var txt = document.querySelector('#txt');
             //txt.setAttribute('value', 'q kjjnkjnkjnkwert');
         };
+        
+        if(navigator.geolocation)
+        {navigator.geolocation.getCurrentPosition(successfully,errorCallback);}
 
          navigator.geolocation.watchPosition(successCallback, errorCallback);
 
