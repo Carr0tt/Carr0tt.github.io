@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AR4</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+
+    <script src="../js/aframe-1.4.0/dist/aframe-master.js"></script>
+    <script src="../js/aframe-1.4.0/dist/aframe-master.min.js"></script>
+    <script src='../js/AR.js-master/three.js/build/ar-threex-location-only.js'></script>
+    <script src='../js/AR.js-master/aframe/build/aframe-ar.js'></script>
+    <script src="../js/src/aframe-event-set-component.js"></script>
+    <script src="../js/src/extra-stats.umd.min.js"></script>
+    <script src="../js/src/aframe-physics-system.js"></script>
+
+    <link href="css/AR-button1.css" type="text/css" rel="stylesheet" />
+
+</head>
+
+<body>
+    <span>图像缩放测试</span>
+    <button onclick="ToIndex()">返回导航页</button>
+
+    <a-scene gps-camera="look-controls-enabled: false">
+        <a-box id='box1' gps-projected-entity-place position="0 0 0" scale="0.61 0.61 0.61" color='red'></a-box>
+
+        <a-text id="txt" , value="Hello, world!" position="-0.5 -0 -1  " color="black" scale="1 1 1"></a-text>
+
+    </a-scene>
+
+    <script>function ToIndex() { window.location.href = "../index.html"; }</script>
+
+    <div id="ar-button1" class="ar-button-block1">
+        <div class="button-row">
+            <button class="button" onclick="size(0.1)">size1</button>
+            <button class="button" onclick="size(0.5)">size2</button>
+            <button class="button" onclick="size(2)">size3</button>
+            <button class="button" onclick="size(4)">size4</button>
+            <button class="button" onclick="size(1)">size0</button>
+           
+
+        </div>
+    </div>
+
+    <script>
+        function successfully(one_time_location) {
+            let box1 = document.querySelector('#box1');
+            box1.setAttribute('gps-projected-entity-place', { latitude: one_time_location.coords.latitude, longitude: one_time_location.coords.longitude });
+        }
+
+
+        function successCallback(location) {
+            var lon = location.coords.longitude;
+            var lat = location.coords.latitude;
+
+
+            var txt1 = document.querySelector('#txt');
+            txt1.setAttribute('scale', '1 1 1');
+            txt1.setAttribute('value', lon);
+
+
+            const dis = box1.getAttribute('gps-projected-entity-place').latitude;
+
+            txt1.setAttribute('value', 'dy: ' + lat + ' box: ' + dis);
+
+
+        };
+
+        function errorCallback(error) {
+            //var txt = document.querySelector('#txt');
+            //txt.setAttribute('value', 'q kjjnkjnkjnkwert');
+        };
+
+        if (navigator.geolocation) { navigator.geolocation.getCurrentPosition(successfully, errorCallback); }
+
+        navigator.geolocation.watchPosition(successCallback, errorCallback);
+
+
+    </script>
+
+    <script>
+        function size(argument)
+        {
+            box1.setAttribute("scale", `${argument} ${argument} ${argument}`);
+        }
+    </script>
+
+</body>
+
+
+
+</html>
