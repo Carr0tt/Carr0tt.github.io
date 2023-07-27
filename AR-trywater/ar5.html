@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AR5</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+
+    <script src="../js/aframe-1.4.0/dist/aframe-master.js"></script>
+    <script src="../js/aframe-1.4.0/dist/aframe-master.min.js"></script>
+    <script src='../js/AR.js-master/three.js/build/ar-threex-location-only.js'></script>
+    <script src='../js/AR.js-master/aframe/build/aframe-ar.js'></script>
+    <script src="../js/src/aframe-event-set-component.js"></script>
+    <script src="../js/src/extra-stats.umd.min.js"></script>
+    <script src="../js/src/aframe-physics-system.js"></script>
+
+
+</head>
+
+<body>
+    <span>建模</span>
+    <button onclick="ToIndex()">返回导航页</button>
+
+    <a-scene gps-camera="look-controls-enabled: false">
+
+        <a-text id="txt" , value="Hello, world!" position="-0.5 -0 -1  " color="black" scale="1 1 1"></a-text>
+        <a-entity gps-projected-entity-place geometry="primitive: cylinder; radius: 0.1; height: 30;" material="color: red;"
+            rotation="-90  0   0   "></a-entity>
+    </a-scene>
+
+    <script>function ToIndex() { window.location.href = "../index.html"; }</script>
+   
+</body>
+
+</html>
