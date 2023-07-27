@@ -24,7 +24,7 @@
 
     <a-scene gps-camera="look-controls-enabled: false">
         <a-box id='box1' gps-projected-entity-place position="0 -0.5 0" scale="0.61 0.61 0.61" color='green'></a-box>
-
+        <a-box id='box2' gps-projected-entity-place position="0 -0.5 0" scale="0.61 0.61 0.61" color='red'></a-box>
         <a-text id="txt" , value="Hello, world!" position="-0.5 -0 -1  " color="black" scale="1 1 1"></a-text>
 
     </a-scene>
@@ -36,6 +36,9 @@
     <script>
             var box1 = document.querySelector('#box1');
             box1.setAttribute('gps-projected-entity-place', { latitude: 23.135899137, longitude: 113.277890784 });
+
+            var box2 = document.querySelector('#box2');
+            box2.setAttribute('gps-projected-entity-place', { latitude: 23.053591161, longitude: 113.395998675 });
 
 
     </script>
