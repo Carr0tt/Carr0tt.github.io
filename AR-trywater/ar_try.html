@@ -43,6 +43,14 @@
 
             var box2 = document.querySelector('#box2');
             box2.setAttribute('gps-entity-place', { latitude: 2.053591161, longitude: 11.395998675 });
+
+            var dis1 = box1.getAttribute('gps-entity-place').latitude;
+            var dis2 = box2.getAttribute('gps-entity-place').latitude;
+            
+
+            var txt1 = document.querySelector('#txt');
+            txt1.setAttribute('value', 'l1: '+dis1+' l2: '+dis2);
+
         }
 
         function showError(error) {
