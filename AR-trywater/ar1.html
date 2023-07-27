@@ -42,7 +42,7 @@
         var txt = document.querySelector("#txt");
         function showPosition(position) {
             txt.setAttribute('scale','0.1 0.1 0.1')
-            txt.setAttribute('value', "Lat:"+ position.coords.latitude);
+            txt.setAttribute('value', "Lat:"+ position.coords.latitude+'/n Lon: '+position.coords.longitude);
         }
 
         function showError(error) {
