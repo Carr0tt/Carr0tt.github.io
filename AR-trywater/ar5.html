@@ -22,15 +22,29 @@
     <span>建模</span>
     <button onclick="ToIndex()">返回导航页</button>
 
-    <a-scene gps-camera="look-controls-enabled: false">
+    <a-scene >
 
+        <a-camera id="cam" position="0 1 0">
+        <a-entity id="object" geometry="primitive: cylinder; radius: 0.1; height: 30;"material="color: red;" rotation="-90  0   0   " position="0 -5 0"></a-entity>
+        </a-camera>
         <a-text id="txt" , value="Hello, world!" position="-0.5 -0 -1  " color="black" scale="1 1 1"></a-text>
-        <a-entity gps-projected-entity-place geometry="primitive: cylinder; radius: 0.1; height: 130;" material="color: red;"
-            rotation="-90  0   0   "></a-entity>
+
     </a-scene>
 
-    <script>function ToIndex() { window.location.href = "../index.html"; }</script>
-   
-</body>
+    <script>
+    function ToIndex() { window.location.href = "../index.html"; }
+    var object = document.querySelector('#object');
+    var a = object.object3D.position
+    console.log(a);
 
+    var cam = document.querySelector('#cam');
+    var b = cam.object3D.position
+    console.log(b);
+
+    var txt = document.querySelector('#txt');
+    var c = txt.object3D.position
+    console.log(c);
+    </script>
+
+</body>
 </html>
