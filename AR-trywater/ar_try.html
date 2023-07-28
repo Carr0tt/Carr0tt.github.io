@@ -24,24 +24,29 @@
 
     <a-scene embedded>
         <a-camera id="cam" position="0 0 0"></a-camera>
-        <a-box id='box1'  scale="0.3 0.3 0.3" position="0 -0.5 -1" color='green'></a-box>
-        <a-box id='box2'  scale="0.61 0.61 0.61" position="0 0.5 1"color='red'></a-box>
+        <a-box id='box1' scale="0.3 0.3 0.3" position="0 -0.5 -1" color='green'></a-box>
+        <a-box id='box2' scale="0.61 0.61 0.61" position="0 0.5 1" color='red'></a-box>
         <a-text id="txt" , value="Hello, world!" position="-0.5 -0 -1  " color="black" scale="1 1 1"></a-text>
 
     </a-scene>
 
     <script>function ToIndex() { window.location.href = "../index.html"; }</script>
 
+    <div style="position: fixed; bottom: 0; left: 0;">
+        <button onclick="Sca(1)">change x1</button>
+        <button onclick="Sca(5)">change x5</button>
+        <button onclick="Sca(10)">change x10</button>
 
+    </div>
 
     <script>
+        let box1 = document.querySelector('#box1');
 
 
         function showPosition(position) {
             var lat0 = position.coords.latitude;
             var lon0 = position.coords.longitude;
 
-            var box1 = document.querySelector('#box1');
             box1.setAttribute('gps-entity-place', { latitude: lat0, longitude: lon0 });
 
             var box2 = document.querySelector('#box2');
@@ -53,19 +58,31 @@
 
             var dis1 = box1.getAttribute('gps-entity-place').latitude;
             var dis2 = box2.getAttribute('gps-entity-place').latitude;
-            
+
             var txt1 = document.querySelector('#txt');
-            txt1.setAttribute('value', 'l1: '+dis1+' l2: '+dis2);
+            txt1.setAttribute('value', 'l1: ' + dis1 + ' l2: ' + dis2);
 
         }
 
         function showError(error) {
         }
-if(navigator.geolocation){ navigator.geolocation.getCurrentPosition(showPosition, showError);}
+        if (navigator.geolocation) { navigator.geolocation.getCurrentPosition(showPosition, showError); }
 
 
 
     </script>
+
+        <script>
+
+            function Sca(m) {
+                var numlat = box1.getAttribute('gps-entity-place').latitude;
+                var numlon = box1.getAttribute('gps-entity-place').longitude;                
+                var nn = 0.0000001*m;
+                numlat = numlat + nn;
+                box1.setAttribute('gps-entity-place', { latitude: numlat, longitude: numlon });
+                console.log('ssssss: '+ box1.getAttribute('gps-entity-place').latitude)
+            }
+        </script>
 
 </body>
 
