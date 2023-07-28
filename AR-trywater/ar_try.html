@@ -72,20 +72,19 @@
 
     </script>
 
-        <script>
+    <script>
 
-            function Sca(m) {
-                var numlat = box1.getAttribute('gps-entity-place').latitude;
-                var numlon = box1.getAttribute('gps-entity-place').longitude;                
-                var nn = 0.0000001*m;
-                numlat = numlat + nn;
-                box1.setAttribute('gps-entity-place', { latitude: numlat, longitude: numlon });
-                console.log('ssssss: '+ box1.getAttribute('gps-entity-place').latitude)
-            }
-        </script>
+        function Sca(m) {
+            var numlat = box1.getAttribute('gps-entity-place').latitude;
+            var numlon = box1.getAttribute('gps-entity-place').longitude;
+            var nn = 0.000001 * m;
+            numlat = numlat + nn;
+            box1.setAttribute('gps-entity-place', { latitude: numlat, longitude: numlon });
+            console.log('ssssss: ' + box1.getAttribute('gps-entity-place').latitude)
+            txt1.setAttribute('value', 'l1: ' + box1.getAttribute('gps-entity-place').latitude);
+
+        }
+    </script>
 
 </body>
-
-
-
 </html>
