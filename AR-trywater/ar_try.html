@@ -25,7 +25,7 @@
     <a-scene embedded>
         <a-camera id="cam" position="0 0 0"></a-camera>
         <a-box id='box1' scale="0.3 0.3 0.3" position="0 -0.5 -1" color='green'></a-box>
-        <a-box id='box2' scale="0.6 0.2 0.3" position="0 -0.2 -1.3" color='red'></a-box>
+        <a-box id='box2' scale="0.6 0.2 0.3" gps-entity-place='latitude: 2.13131;longitude: 11.395998675;' position="0 -0.2 -1.3" color='red'></a-box>
         <a-text id="txt" , value="Hello, world!" position="-0.5 -0 -1  " color="black" scale="1 1 1"></a-text>
 
     </a-scene>
@@ -50,7 +50,7 @@
             box1.setAttribute('gps-entity-place', { latitude: lat0, longitude: lon0 });
 
             var box2 = document.querySelector('#box2');
-            box2.setAttribute('gps-entity-place', { latitude: 2.053591161, longitude: 11.395998675 });
+            //box2.setAttribute('gps-entity-place', { latitude: 2.053591161, longitude: 11.395998675 });
 
             var cam = document.querySelector('#cam');
             cam.setAttribute('gps-camera', 'simulateLatitude: ' + position.coords.latitude + '; simulateLongitude: ' + position.coords.longitude);
