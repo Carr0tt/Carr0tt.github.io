@@ -44,7 +44,7 @@
 
 
         function showPosition(position) {
-            var lat0 = position.coords.latitude;
+            var lat0 = position.coords.latitude + 0.0001*10;
             var lon0 = position.coords.longitude;
 
             box1.setAttribute('gps-entity-place', { latitude: lat0, longitude: lon0 });
