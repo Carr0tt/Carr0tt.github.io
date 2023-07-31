@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>AMap Test</title>
+    <style>
+        html,
+        body,
+        #container {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <script src="https://webapi.amap.com/loader.js"></script>
+
+</head>
+
+<body>
+    <p id='showlat'>hello</p>
+    <p id='showlon'>hello</p>
+
+
+<script type="text/javascript">
+    window._AMapSecurityConfig = {
+        securityJsCode: 'cc642b7510e8e01e37891c3073861ce8',
+    }
+</script>
+
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=fc803f99846432fc357c53a8f8867fa4"></script>
+
+
+  <script>
+    // 初始化地图
+    var map = new AMap.Map('map', {
+        zoom: 13
+    });
+
+        AMap.plugin('AMap.Geolocation', function () {
+            var geolocation = new AMap.Geolocation({
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 0,
+                convert: true,
+                showButton: false
+            });
+
+            function getCurrentPosition() {
+                geolocation.getCurrentPosition(function (status, result) {
+                    if (status == 'complete') {
+                        var position = result.position;
+                        var lng = position.lng; // 经度
+                        var lat = position.lat; // 纬度
+                        document.getElementById('showlat').innerHTML='lat: '+lat;
+                        document.getElementById('showlon').innerHTML = 'lon: '+lng ;
+
+                    } else if (status == 'error') {
+                        var info = result.info;
+                        console.log('获取位置失败：' + info);
+                    }
+                });
+            }
+
+            // 每隔一秒调用getCurrentPosition获取当前位置
+            setInterval(getCurrentPosition, 200);
+        });
+</script>
+</body>
+
+</html>
