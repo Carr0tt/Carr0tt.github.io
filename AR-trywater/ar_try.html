@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>AR2</title>
+    <title>AR fail</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
@@ -19,73 +19,59 @@
 </head>
 
 <body>
-    <span>用属性固定住一个东西的gps信息</span>
-    <button onclick="ToIndex()">返回导航页</button>
 
-    <a-scene vr-mode-ui='enabled: false' arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false'
-        renderer='antialias: true; alpha: true' physics="gravity: 0">
-        <a-camera id="cam" position="0 0 0"></a-camera>
-        <a-box id='box1' scale="0.3 0.3 0.3" position="0 -0.5 -1" color='green'></a-box>
-        <a-box id='box2' scale="0.6 0.2 0.3" gps-entity-place='latitude: 2.13131;longitude: 11.395998675;' position="0 -0.2 -1.3" color='red'></a-box>
+
+    <a-scene >
+        <!-- <a-camera id="cam" position="0 0 0"></a-camera> -->
+        <a-box id='box1' scale="0.3 0.3 0.4" position="0 -0.5 -1" color='green'></a-box>
+        <a-box id='box2' scale="0.6 0.2 0.3" gps-entity-place='latitude: 23.133266;longitude: 113.283304;'
+            position="0 -0.5 -1" color='red'></a-box>
         <a-text id="txt" , value="Hello, world!" position="-0.5 -0 -1  " color="black" scale="1 1 1"></a-text>
 
     </a-scene>
-
-    <script>function ToIndex() { window.location.href = "../index.html"; }</script>
-
-    <div style="position: fixed; bottom: 0; left: 0;">
-        <button onclick="Sca(100)">change x1</button>
-        <button onclick="Sca(500)">change x5</button>
-        <button onclick="Sca(1000)">change x10</button>
-
-    </div>
+        <div style="position: fixed; bottom: 0; left: 0;">
+            <button id="but" onclick="size()">size1</button>
+        </div>
 
     <script>
+        // cameraLatitude = 23.1332;
+        // cameraLongitude = 113.283274;
+        // 创建 <a-camera> 元素
+        var newEntity = document.createElement('a-camera');
+        // 设置属性
+        newEntity.setAttribute('id','cam')
+        newEntity.setAttribute('arjs-device-orientation-controls', 'smoothingFactor: 0.8');
+        newEntity.setAttribute('gps-camera', 'simulateLatitude: ' + 23.133266 + '; simulateLongitude: ' + 113.283304);
+        newEntity.setAttribute('cursor', 'rayOrigin: mouse');
+        document.querySelector('a-scene').appendChild(newEntity);
+
         let box1 = document.querySelector('#box1');
+        box1.setAttribute('gps-entity-place', { latitude: 23.13326, longitude: 113.283304 });
+
+        let c = document.querySelector('#cam');
+        let t = document.querySelector('#txt');
 
 
-        function showPosition(position) {
-            var lat0 = position.coords.latitude + 0.0001*100;
-            var lon0 = position.coords.longitude;
-            
-            box1.setAttribute('gps-entity-place', { latitude: lat0, longitude: lon0 });
-
-            var box2 = document.querySelector('#box2');
-            //box2.setAttribute('gps-entity-place', { latitude: 2.053591161, longitude: 11.395998675 });
-
-            var cam = document.querySelector('#cam');
-            cam.setAttribute('gps-camera', 'simulateLatitude: ' + position.coords.latitude + '; simulateLongitude: ' + position.coords.longitude);
-            cam.setAttribute('arjs-device-orientation-controls', 'smoothingFactor: 0.8');
-
-            var dis1 = box1.getAttribute('gps-entity-place').latitude;
-            var dis2 = box2.getAttribute('gps-entity-place').latitude;
-
-            var txt1 = document.querySelector('#txt');
-            txt1.setAttribute('value', 'l1: ' + dis1 + ' l2: ' + dis2);
-
+        let x = 0;
+        
+        function size()
+        {
+            x = x+0.0000001
+            var latt = 23.133266+x;
+            var longg = 113.283304-x
+            c.setAttribute('gps-camera', 'simulateLatitude: ' + latt + '; simulateLongitude: ' + longg);
+            t.setAttribute('value','sadd')
         }
 
-        function showError(error) {
-        }
-        if (navigator.geolocation) { navigator.geolocation.getCurrentPosition(showPosition, showError); }
+        var button = document.getElementById("but");
 
-
-
+            // 设置按钮的宽度和高度
+            button.style.width = "90px";
+            button.style.height = "90px";
     </script>
 
-    <script>
 
-        function Sca(m) {
-            var numlat = box1.getAttribute('gps-entity-place').latitude;
-            var numlon = box1.getAttribute('gps-entity-place').longitude;
-            var nn = 0.000001 * m;
-            numlat = numlat + nn;
-            box1.setAttribute('gps-entity-place', { latitude: numlat, longitude: numlon });
-            console.log('ssssss: ' + box1.getAttribute('gps-entity-place').latitude)
-            txt1.setAttribute('value', 'l1: ' + box1.getAttribute('gps-entity-place').latitude);
-
-        }
-    </script>
 
 </body>
+
 </html>
