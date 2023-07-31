@@ -70,6 +70,19 @@
             button.style.height = "90px";
     </script>
 
+    <script>
+        function changePos(position)
+        {
+        var latt = position.coords.latitude;
+        var longg = position.coords.longitude;
+        c.setAttribute('gps-camera', 'simulateLatitude: ' + latt + '; simulateLongitude: ' + longg);
+        t.setAttribute('value','lat: '+latt.toFixed(6)+' long: '+longg.toFixed(6));
+
+        }
+        function showError(error){t.setAttribute('value', 'error')}
+        navigator.geolocation.watchPosition(changePos,showError);
+    </script>
+
 
 
 </body>
