@@ -12,8 +12,8 @@ function InitPipeModel(pipelines, i) {
     newEntity.setAttribute('rotation', pipelines[i].rotation);
     newEntity.setAttribute('position', { x: 0, y: pipelines[i].centerDepth, z: 0 });
     newEntity.setAttribute('gps-entity-place', {
-        latitude: pipelines[i].centerLatitude ,
-        longitude: pipelines[i].centerLongitude
+        latitude: 23.13246 ,
+        longitude: 113.28282
     });
     newEntity.setAttribute('event-set__enter', '_event: mouseenter; color: black');
     newEntity.setAttribute('event-set__leave', '_event: mouseleave; color: ' + pipelines[i].color);
