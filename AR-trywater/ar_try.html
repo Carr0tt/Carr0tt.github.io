@@ -19,12 +19,15 @@
 
 
 
-  <script src="js/InitPipeData.js"></script>
-  <script src="js/Data.js"></script>
 
 </head>
 
 <body>
+  <script src="js/Data.js"></script>
+  <script src="js/InitPipeData.js"></script>
+  <script src="js/InitPipeModel.js"></script>
+    <script src="js/InitCamera.js"></script>
+
 
     <div style="position: fixed; top: 0; left: 0;">
       <p id='showlat'>hello1</p>
@@ -49,7 +52,6 @@
   </a-scene>
 
 
-  <script src="js/InitCamera.js"></script>
 
 
       <script>
@@ -88,7 +90,7 @@
           }
 
           // 每隔一秒调用getCurrentPosition获取当前位置
-          setInterval(getCurrentPosition, 1000);
+          setInterval(getCurrentPosition, 500);
         });
       </script>
 
@@ -97,9 +99,7 @@
 
   <button class="exit-button" onclick="Exit()">&#8629;</button> <!-- 退出图标按钮 -->
 
-  <script src="js/NewLocation.js"></script>
-  <script src="js/InitPipeModel.js"></script>
-  <script src="js/NewPipe.js"></script>
+
 
 </body>
 
