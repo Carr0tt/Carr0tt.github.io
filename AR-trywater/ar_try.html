@@ -2,11 +2,10 @@
 <html>
 
 <head>
-    <title>AR fail</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
-
+  <title>AR3</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
     <script src="../js/aframe-1.4.0/dist/aframe-master.js"></script>
     <script src="../js/aframe-1.4.0/dist/aframe-master.min.js"></script>
     <script src='../js/AR.js-master/three.js/build/ar-threex-location-only.js'></script>
@@ -14,76 +13,93 @@
     <script src="../js/src/aframe-event-set-component.js"></script>
     <script src="../js/src/extra-stats.umd.min.js"></script>
     <script src="../js/src/aframe-physics-system.js"></script>
+  
+  <script src="https://webapi.amap.com/loader.js"></script>
 
+
+
+
+  <script src="js/InitPipeData.js"></script>
+  <script src="js/Data.js"></script>
 
 </head>
 
 <body>
 
+    <div style="position: fixed; top: 0; left: 0;">
+      <p id='showlat'>hello1</p>
+      <p id='showlon'>hello2</p>
+    </div>
 
-    <a-scene >
-        <!-- <a-camera id="cam" position="0 0 0"></a-camera> -->
-        <a-box id='box1' scale="0.3 0.3 0.4" position="0 -0.5 -1" color='green'></a-box>
-        <a-box id='box2' scale="0.6 0.2 0.3" gps-entity-place='latitude: 23.133266;longitude: 113.283304;'
-            position="0 -0.5 -1" color='red'></a-box>
-        <a-text id="txt" , value="Hello, world!" position="-0.5 -0 -1  " color="black" scale="1 1 1"></a-text>
-
-    </a-scene>
-        <div style="position: fixed; bottom: 0; left: 0;">
-            <button id="but" onclick="size()">size1</button>
-        </div>
-
-    <script>
-        // cameraLatitude = 23.1332;
-        // cameraLongitude = 113.283274;
-        // 创建 <a-camera> 元素
-        var newEntity = document.createElement('a-camera');
-        // 设置属性
-        newEntity.setAttribute('id','cam')
-        newEntity.setAttribute('arjs-device-orientation-controls', 'smoothingFactor: 0.8');
-        newEntity.setAttribute('gps-camera', 'simulateLatitude: ' + 23.133266 + '; simulateLongitude: ' + 113.283304);
-        newEntity.setAttribute('cursor', 'rayOrigin: mouse');
-        document.querySelector('a-scene').appendChild(newEntity);
-
-        let box1 = document.querySelector('#box1');
-        box1.setAttribute('gps-entity-place', { latitude: 23.13326, longitude: 113.283304 });
-
-        let c = document.querySelector('#cam');
-        let t = document.querySelector('#txt');
-
-
-        let x = 0;
-        
-        function size()
-        {
-            x = x+0.0000001
-            var latt = 23.133266+x;
-            var longg = 113.283304-x
-            c.setAttribute('gps-camera', 'simulateLatitude: ' + latt + '; simulateLongitude: ' + longg);
-            t.setAttribute('value','sadd')
-        }
-
-        var button = document.getElementById("but");
-
-            // 设置按钮的宽度和高度
-            button.style.width = "90px";
-            button.style.height = "90px";
+    <!-- 密钥和key -->
+    <script type="text/javascript">
+      window._AMapSecurityConfig = {
+        securityJsCode: 'cc642b7510e8e01e37891c3073861ce8',
+      }
     </script>
-
-    <script>
-        function changePos(position)
-        {
-        var latt = position.coords.latitude;
-        var longg = position.coords.longitude;
-        c.setAttribute('gps-camera', 'simulateLatitude: ' + latt + '; simulateLongitude: ' + longg);
-        t.setAttribute('value','lat: '+latt.toFixed(6)+' long: '+longg.toFixed(6));
-
-        }
-        function showError(error){t.setAttribute('value', 'error')}
-        navigator.geolocation.watchPosition(changePos,showError);
-    </script>
+    
+    <script type="text/javascript"
+      src="https://webapi.amap.com/maps?v=1.4.15&key=fc803f99846432fc357c53a8f8867fa4"></script>
+    <!-- 密钥和key -->
 
 
+  <a-scene vr-mode-ui='enabled: false' arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false'
+    renderer='antialias: true; alpha: true' physics="gravity: 0">
+    <a-entity id="waterSupply"></a-entity>
+  </a-scene>
+
+
+  <script src="js/InitCamera.js"></script>
+
+
+      <script>
+        let cam = document.querySelector('#camm');
+
+        var map = new AMap.Map('map', {
+          zoom: 13
+        });
+
+        AMap.plugin('AMap.Geolocation', function () {
+          var geolocation = new AMap.Geolocation({
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 0,
+            convert: true,
+            showButton: false
+          });
+
+          function getCurrentPosition() {
+            geolocation.getCurrentPosition(function (status, result) {
+              if (status == 'complete') {
+                var position = result.position;
+                var lng = position.lng; // 经度
+                var lat = position.lat; // 纬度
+                document.getElementById('showlat').innerHTML = 'lat: ' + lat;
+                document.getElementById('showlon').innerHTML = 'lon: ' + lng;
+                console.log('lat: ' + lat);
+                console.log('lon: ' + lng);
+                cam.setAttribute('gps-camera', 'simulateLatitude: ' + lat + '; simulateLongitude: ' + lng);
+
+              } else if (status == 'error') {
+                var info = result.info;
+                console.log('获取位置失败：' + info);
+              }
+            });
+          }
+
+          // 每隔一秒调用getCurrentPosition获取当前位置
+          setInterval(getCurrentPosition, 1000);
+        });
+      </script>
+
+
+
+
+  <button class="exit-button" onclick="Exit()">&#8629;</button> <!-- 退出图标按钮 -->
+
+  <script src="js/NewLocation.js"></script>
+  <script src="js/InitPipeModel.js"></script>
+  <script src="js/NewPipe.js"></script>
 
 </body>
 
