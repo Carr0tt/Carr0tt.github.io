@@ -7,10 +7,13 @@ function InitPipeModel(pipelines, i) {
     newEntity.setAttribute('radius', pipelines[i].radius);
     newEntity.setAttribute('type', pipelines[i].type);
     //newEntity.setAttribute('height', pipelines[i].length);
-    newEntity.setAttribute('height', '50'); 
+    newEntity.setAttribute('height', '120'); 
     newEntity.setAttribute('color', pipelines[i].color);
-    newEntity.setAttribute('rotation', pipelines[i].rotation);
-    newEntity.setAttribute('position', { x: 0, y: pipelines[i].centerDepth, z: 0 });
+    //newEntity.setAttribute('rotation', pipelines[i].rotation);
+    newEntity.setAttribute('rotation', '0 40 90');
+    //newEntity.setAttribute('position', { x: 0, y: pipelines[i].centerDepth, z: 0 });
+    newEntity.setAttribute('position', { x: 0, y: -10, z: 0 });
+    
     newEntity.setAttribute('gps-entity-place', {
         latitude: 23.13246 ,
         longitude: 113.28282
