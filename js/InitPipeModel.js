@@ -12,7 +12,7 @@ function InitPipeModel(pipelines, i) {
     //newEntity.setAttribute('rotation', pipelines[i].rotation);
     newEntity.setAttribute('rotation', '0 40 90');
     //newEntity.setAttribute('position', { x: 0, y: pipelines[i].centerDepth, z: 0 });
-    newEntity.setAttribute('position', { x: 0, y: -10, z: 0 });
+    newEntity.setAttribute('position', { x: 0, y: -18, z: 0 });
     
     newEntity.setAttribute('gps-entity-place', {
         latitude: 23.13246 ,
