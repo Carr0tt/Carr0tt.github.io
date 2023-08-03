@@ -31,13 +31,14 @@
             <a-entity position="0 -3 0" rotation=" 0 140 0">
             <a-cylinder position="6 0 0" radius="0.1" height='12' color="blue" rotation="0 0 90"></a-cylinder>
             </a-entity>
-
         </a-marker>
-
-
-        <a-entity camera></a-entity>
-
+        <a-camera id="cam" ></a-camera>
     </a-scene>
+    
+    <script>
+        let cam = document.querySelector('#cam');
+        cam.setAttribute('gps-camera', 'simulateLatitude: ' + 23.132468 + '; simulateLongitude: ' + 113.282836)
+    </script>
 </body>
 
 </html>
